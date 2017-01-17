@@ -21,8 +21,8 @@ fs.readdirSync('./gulp').filter(function(file){
 });
 
 /**
- *  Default task clean temporaries directories and launch the
- *  main optimization build task
+ *  Default task clean web/sources and web/dist directories and launch the
+ *  main build task
  */
 gulp.task('default', ['clean'], function () {
   gulp.start('build');
