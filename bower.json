@@ -1,0 +1,17 @@
+{
+  "name": "symfony-gulp-builder",
+  "version": "0.0.0",
+  "dependencies": {
+    "fancybox": "^2.1.5",
+    "modernizr": "modernizr1#^2.8.3",
+    "bootstrap-sass": "^3.3.7"
+  },
+  "overrides": {
+    "fancybox": {
+      "main": [
+        "source/jquery.fancybox.css",
+        "source/jquery.fancybox.js"
+      ]
+    }
+  }
+}

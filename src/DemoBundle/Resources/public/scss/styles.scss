@@ -1,0 +1,46 @@
+@import "variables";
+
+body{
+    background-color: $base-color;
+}
+
+.jumbotron.intro{
+    background: #2C3337 url("../img/marseille.jpg") no-repeat;
+    background-position: 50% 0;
+    .container{
+        background: none;
+        color: #fff;
+    }
+}
+
+@media (min-width: 481px){
+    .jumbotron.intro{
+        background-size: 200% auto;
+        background-position: 50% 10%;
+        min-height: 470px;
+    }
+}
+
+@media (min-width: 768px){
+    .jumbotron.intro{
+        -webkit-background-size: cover;
+        background-size: cover;
+        background-position: 50% 20%;
+        padding-top: 0;
+    }    
+}
+
+@media (min-width: 1500px){
+    .jumbotron.intro{
+        min-height: 670px;
+        padding-top: 60px;
+    }
+}
+
+@media (max-width: 480px){
+    .jumbotron.intro{
+        padding-top: 0;
+        min-height: 350px;
+        background-size: 200% auto;
+    }
+}

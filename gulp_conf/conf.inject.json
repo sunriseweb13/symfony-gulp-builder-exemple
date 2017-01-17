@@ -1,0 +1,37 @@
+[{
+    "dir": "./app/Resources/views",
+    "view": "/base.html.twig",
+    "output": "base",
+    "javascript":{
+        "vendor":[
+            "./web/components/jquery/dist/jquery.js"
+        ],
+        "head":["./web/components/modernizr/modernizr.js"],
+        "app":[]
+    },
+    "css":{
+        "vendor":[],
+        "app":[]
+    }
+},
+{
+    "dir": "./src/DemoBundle/Resources/views",
+    "view": "/layout.html.twig",
+    "output": "demo",
+    "javascript":{
+        "vendor":[
+            "./web/components/fancybox/source/jquery.fancybox.js"
+        ],
+        "head":[],
+        "app":[]
+    },
+    "css":{
+        "vendor":[
+            "./web/sources/app/Resources/public/scss/bootstrap-custom.css",
+            "./web/components/fancybox/source/jquery.fancybox.css"
+        ],
+        "app":[
+            "./web/sources/src/DemoBundle/Resources/public/scss/styles.css"
+        ]
+    }
+}]
