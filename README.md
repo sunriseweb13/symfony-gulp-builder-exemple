@@ -236,6 +236,8 @@ To run the demo :
 
 - Clone this repository
 
-- Run `bower install` && `npm install` to install the required dependencies.
+- Run `php composer.phar install`
 
-- Then run `gulp --serve` for work in dev environnement with browserSync or `gulp --prod --serve` to test the prod environnement.
+- Run `bower install` and `npm install` to install the required dependencies.
+
+- Run `gulp --serve` for work in dev environnement with browserSync or `gulp --prod --serve` to test the prod environnement.
