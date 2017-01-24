@@ -83,7 +83,7 @@ Run `gulp --prod` or `gulp --prod --serve` to use the prod environnement.
 
 ### Individual tasks
 
-- `gulp assets` to process assets, compiles it (eventually) and serves it in `web/sources` folder
+- `gulp assets` to process assets, compile it (eventually) and serve it in `web/sources` folder
 
 - `gulp clean` to delete `web/sources` and `web/dist` folders
 
