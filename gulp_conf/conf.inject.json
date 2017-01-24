@@ -6,7 +6,9 @@
         "vendor":[
             "./web/components/jquery/dist/jquery.js"
         ],
-        "head":["./web/components/modernizr/modernizr.js"],
+        "head":[
+            "./web/components/modernizr/modernizr.js"
+        ],
         "app":[]
     },
     "css":{
