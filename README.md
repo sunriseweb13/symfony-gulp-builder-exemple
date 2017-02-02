@@ -40,9 +40,10 @@ Run `gulp --prod` or `gulp --prod --serve` to use the prod environnement.
 │   │   ├── Controller/
 │   │   ├── Resources/
 │   │   │   └── public/
-│   │   │       ├── css/
+│   │   │       ├── fonts/
 │   │   │       ├── img/
-│   │   │       └── js/
+│   │   │       ├── styles/
+│   │   │       └── scripts/
 │   │   │
 │   │   └── AppBundle.php
 │   │
@@ -50,9 +51,10 @@ Run `gulp --prod` or `gulp --prod --serve` to use the prod environnement.
 │       ├── Controller/
 │       ├── Resources/
 │       │   └── public/
-│       │       ├── css/
+│       │       ├── fonts/
 │       │       ├── img/
-│       │       └── js/
+│       │       ├── styles/
+│       │       └── scripts/
 │       │
 │       └── DemoBundle.php
 │
