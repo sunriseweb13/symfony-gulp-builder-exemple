@@ -6,7 +6,9 @@
         "vendor":[
             "./web/components/jquery/dist/jquery.js"
         ],
-        "head":["./web/components/modernizr/modernizr.js"],
+        "head":[
+            "./web/components/modernizr/modernizr.js"
+        ],
         "app":[]
     },
     "css":{
@@ -27,11 +29,11 @@
     },
     "css":{
         "vendor":[
-            "./web/sources/app/Resources/public/scss/bootstrap-custom.css",
+            "./web/sources/app/Resources/public/styles/bootstrap-custom.css",
             "./web/components/fancybox/source/jquery.fancybox.css"
         ],
         "app":[
-            "./web/sources/src/DemoBundle/Resources/public/scss/styles.css"
+            "./web/sources/src/DemoBundle/Resources/public/styles/styles.css"
         ]
     }
 }]
