@@ -42,8 +42,8 @@ Run `gulp --prod` or `gulp --prod --serve` to use the prod environnement.
 │   │   │   └── public/
 │   │   │       ├── fonts/
 │   │   │       ├── img/
-│   │   │       ├── styles/
-│   │   │       └── scripts/
+│   │   │       ├── scripts/
+│   │   │       └── styles/
 │   │   │
 │   │   └── AppBundle.php
 │   │
@@ -53,8 +53,8 @@ Run `gulp --prod` or `gulp --prod --serve` to use the prod environnement.
 │       │   └── public/
 │       │       ├── fonts/
 │       │       ├── img/
-│       │       ├── styles/
-│       │       └── scripts/
+│       │       ├── scripts/
+│       │       └── styles/
 │       │
 │       └── DemoBundle.php
 │
