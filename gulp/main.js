@@ -71,14 +71,11 @@ var injectOptions2 = Object.assign({}, injectOptions);
 injectOptions2['starttag'] = '<!-- inject:head:{{ext}} -->';
 
 function transformCssUrls(url, filePath){
-    if(url.indexOf('/') === 0){
-        return url.slice(url.indexOf('/'));
-    }
-    if(url.indexOf('http:') !== -1){
-        return url.slice(url.indexOf('http:')).replace('http:', 'http:/');
-    }
-    if(url.indexOf('data:') !== -1){
-        return url.slice(url.indexOf('data:'));
+    var patterns = ['/', 'data:', 'http:', 'https:'];
+    for(var i in patterns){
+        if(url.indexOf(patterns[i]) === 0){
+            return url.slice(url.indexOf(patterns[i]));  
+        }
     }
     var split = path.resolve(filePath,'../'+url).split(path.join(path.resolve(),utils.formatPath('/web')));
     return utils.formatPath(split[1]);
