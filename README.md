@@ -232,7 +232,7 @@ Exemple :
 4) Step 4 : Run `gulp --serve` (if it is not already running) to take account of the update of the `gulp_conf/conf.inject.json` file
 
 ## Get started
-This repository is an example of a symfony (version 2.8) project on which this gulp configuration is installed. It uses bower and sass.
+1) This repository is an example of a symfony (version 2.8) project on which this gulp configuration is installed. It uses bower and sass.
 
 To run the demo :
 
@@ -243,3 +243,5 @@ To run the demo :
 - Run `bower install` and `npm install` to install the required dependencies.
 
 - Run `gulp --serve` for work in dev environnement with browserSync or `gulp --prod --serve` to test the prod environnement.
+
+2) You can start working from a [blank version](https://github.com/sunriseweb13/symfony-gulp-builder-exemple) of the Symfony Gulp Builder on an existing symfony project
