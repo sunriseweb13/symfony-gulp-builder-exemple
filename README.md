@@ -244,4 +244,4 @@ To run the demo :
 
 - Run `gulp --serve` for work in dev environnement with browserSync or `gulp --prod --serve` to test the prod environnement.
 
-2) You can start working from a [blank version](https://github.com/sunriseweb13/symfony-gulp-builder-exemple) of the Symfony Gulp Builder on an existing symfony project
+2) You can start working from a [blank version](https://github.com/sunriseweb13/symfony-gulp-builder) of the Symfony Gulp Builder on an existing symfony project
