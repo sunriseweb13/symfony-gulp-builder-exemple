@@ -155,7 +155,7 @@ gulp.task('inject:reset', function () {
 });
 
 gulp.task('assets', ['styles', 'scripts', 'img', 'fonts', 'components']);
-gulp.task('clean', $.del.bind(null, ['web/sources', 'web/fonts', 'web/img', 'web/css', 'web/js']));
+gulp.task('clean', $.del.bind(null, ['web/components', 'web/sources', 'web/fonts', 'web/img', 'web/css', 'web/js']));
 
 function deleteFile(eventPath, ext){
     var destFilePath = utils.destFilePath(eventPath, ext);
