@@ -15,4 +15,7 @@
 /node_modules/
 /web/components/
 /web/sources/
-/web/dist/
+/web/css/
+/web/fonts/
+/web/img/
+/web/js/

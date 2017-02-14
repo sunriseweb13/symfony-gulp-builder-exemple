@@ -18,15 +18,19 @@ exports.formatPathReverse = function (filepath){
     return filepath;
 }
 
-exports.findShortPath = function (filepath){
-    var dirname = path.dirname(filepath);
-    var basename = path.basename(filepath);
-    filepath = dirname.replace(/\\src|\\app/, '')
-        .replace(exports.formatPathReverse('/img'), '')
+exports.getShortPath = function(dirname, folder){
+    return dirname.replace(/src|app/, '')
+        .replace(exports.formatPathReverse('/'+folder), '')
         .replace(exports.formatPathReverse('/Resources/public'), '')
-        .replace(exports.formatPathReverse('/sources'), exports.formatPathReverse('/sources/img'))
+        .replace(exports.formatPathReverse('/sources'), exports.formatPathReverse('/'+folder))
         .replace(/(\w+)Bundle/, '$1')
         .toLowerCase();
+}
+
+exports.findShortPath = function (filepath, folder){
+    var dirname = path.dirname(filepath);
+    var basename = path.basename(filepath);
+    filepath = exports.getShortPath(dirname, folder);
 
     return path.join(filepath, basename);
 }
@@ -50,7 +54,7 @@ exports.confPaths = function (){
 
 exports.destFilePath = function (filepath, ext){
     var destFilePath = path.join(path.resolve(), exports.formatPathReverse('/web/sources/'), path.relative(path.resolve(),filepath));
-    if(ext != null){
+    if(ext != 'img' && ext != 'fonts'){
         destFilePath = destFilePath.replace(path.extname(destFilePath), '.'+ext);
     }
     return destFilePath;
@@ -61,7 +65,7 @@ exports.wiredepPath = function(){
     if(wiredep().css)
         files = files.concat(wiredep().css);
     if(wiredep().js)
-        files = files.concat(wiredep().js);  
+        files = files.concat(wiredep().js);
 
     return files;
 }

@@ -15,22 +15,17 @@ var compressing = prod && options.imageop;
 
 gulp.task('img', function () {
     return gulp.src(conf.assets.img)
+        .pipe(gulp.dest('./web/sources'))
         .pipe(cache(gulpif(compressing, imageop({
-            progressive: true, 
+            progressive: true,
             interlaced: true
         }))))
-        .pipe(gulp.dest('./web/sources'))
         .pipe(rename(function (path) {
-            path.dirname = path.dirname.replace(/src|app/, '')
-                .replace(utils.formatPathReverse('/Resources/public'), '')
-                .replace(utils.formatPathReverse('/img'), '')
-                .replace(/(\w+)Bundle/, '$1')
-                .toLowerCase()
+            path.dirname = utils.getShortPath(path.dirname, 'img')
         }))
-        .pipe(gulp.dest('./web/sources/img'));
+        .pipe(gulp.dest('./web/img'));
 });
 
 gulp.task('cache:clear', function (done) {
   return cache.clearAll(done);
 });
-

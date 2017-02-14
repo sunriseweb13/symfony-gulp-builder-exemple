@@ -20,9 +20,9 @@ var $ = require('gulp-load-plugins')({
 var prod = argv.prod;
 var serve = argv.serve;
 
-var stylesTasks = [], 
-stylesDir = [], 
-scriptsTasks = [], 
+var stylesTasks = [],
+stylesDir = [],
+scriptsTasks = [],
 scriptsDir = [],
 buildTasks = [],
 compiled = {};
@@ -32,7 +32,7 @@ function addTaskDir(arrayVar, arrayTask, arrayDir){
         arrayTask.push(name);
         arrayDir.push(arrayVar[name]);
         compiled[path.extname(arrayVar[name][0]).substring(1)] = name;
-    }    
+    }
 }
 
 for (var name in conf.assets.styles) {
@@ -48,7 +48,11 @@ gulp.task('scripts', scriptsTasks);
 
 gulp.task('fonts', function () {
     return gulp.src(conf.assets.fonts)
-        .pipe(gulp.dest('./web/sources'));
+        .pipe(gulp.dest('./web/sources'))
+        .pipe($.rename(function (path) {
+            path.dirname = utils.getShortPath(path.dirname, 'fonts')
+        }))
+        .pipe(gulp.dest('./web/fonts'));
 });
 
 var injectOptions = {
@@ -61,7 +65,7 @@ var injectOptions = {
         }
         else if(path.extname(filePath) === '.css'){
             console.log('Inject stylesheet  '+ filePath);
-            return conf.inject.styles.replace('[filePath]',filePath);        
+            return conf.inject.styles.replace('[filePath]',filePath);
         }
         return null;
     }
@@ -74,11 +78,12 @@ function transformCssUrls(url, filePath){
     var patterns = ['/', 'data:', 'http:', 'https:'];
     for(var i in patterns){
         if(url.indexOf(patterns[i]) === 0){
-            return url.slice(url.indexOf(patterns[i]));  
+            return url.slice(url.indexOf(patterns[i]));
         }
     }
     var split = path.resolve(filePath,'../'+url).split(path.join(path.resolve(),utils.formatPath('/web')));
-    return utils.formatPath(split[1]);
+    var folder = split[1].indexOf('img') === 0 ? 'fonts' : 'img';
+    return utils.formatPath(utils.findShortPath(split[1], folder));
 }
 
 var fileCssStream = function(paths, filename){
@@ -91,7 +96,7 @@ var fileCssStream = function(paths, filename){
         .pipe(gulpif(prod, $.concat(filename+'.css')))
         .pipe(gulpif(prod, $.cssmin()))
         .pipe(gulpif(prod, $.rev()))
-        .pipe(gulpif(prod, gulp.dest('./web/dist/css')));
+        .pipe(gulpif(prod, gulp.dest('./web/css')));
 }
 
 var fileJsStream = function(paths, filename){
@@ -99,19 +104,19 @@ var fileJsStream = function(paths, filename){
         .pipe(gulpif(prod, $.concat(filename+'.js')))
         .pipe(gulpif(prod, $.jsmin()))
         .pipe(gulpif(prod, $.rev()))
-        .pipe(gulpif(prod, gulp.dest('./web/dist/js'))); 
+        .pipe(gulpif(prod, gulp.dest('./web/js')));
 }
 
 var injectFiles = function(paths){
     var vendorStreamCss = fileCssStream(paths.css.vendor, 'vendor-'+paths.output),
     vendorStreamJs      = fileJsStream(paths.javascript.vendor, 'vendor-'+paths.output),
     appStreamCss        = fileCssStream(paths.css.app, paths.output),
-    appStreamJs         = fileJsStream(paths.javascript.app, paths.output),  
+    appStreamJs         = fileJsStream(paths.javascript.app, paths.output),
     headStreamJs        = fileJsStream(paths.javascript.head, 'head-'+paths.output);
 
     var injectJs  = series(vendorStreamJs, appStreamJs);
     var injectCss = series(vendorStreamCss, appStreamCss);
-    
+
     gulp.src(paths.dir+paths.view)
         .pipe($.inject(headStreamJs, injectOptions2))
         .pipe($.inject(injectJs, injectOptions))
@@ -134,13 +139,13 @@ gulp.task('inject:reset', function () {
 });
 
 gulp.task('assets', ['styles', 'scripts', 'img', 'fonts']);
-gulp.task('clean', $.del.bind(null, ['web/sources', 'web/dist']));
+gulp.task('clean', $.del.bind(null, ['web/sources', 'web/fonts', 'web/img', 'web/css', 'web/js']));
 
 function deleteFile(eventPath, ext){
     var destFilePath = utils.destFilePath(eventPath, ext);
     $.del.sync(destFilePath);
-    if(ext == null){
-        var destFileShortPath = utils.findShortPath(destFilePath);
+    if(ext == 'img' || ext == 'fonts'){
+        var destFileShortPath = utils.findShortPath(destFilePath, ext);
         $.del.sync(destFileShortPath);
         $.util.log('File' , $.util.colors.magenta(destFileShortPath), 'has been', $.util.colors.cyan('deleted'));
     }
@@ -163,8 +168,6 @@ function watchActions(event, ext){
         }
         else{
             if (event.type === 'deleted') {
-                if(isImgOrFont) 
-                    ext = null;
                 deleteFile(event.path, ext);
             }
             if(!isImgOrFont){
@@ -192,8 +195,8 @@ gulp.task('build', ['preServe'], function(){
         });
     }
     if(prod)
-        return;  
-        
+        return;
+
     gulp.watch(stylesDir).on('change', function (event) {
         watchActions(event, 'css');
     });
@@ -206,10 +209,10 @@ gulp.task('build', ['preServe'], function(){
     gulp.watch(conf.assets.fonts, ['fonts']).on('change', function (event) {
         watchActions(event, 'fonts');
     });
-    gulp.watch('./gulp_conf/conf.inject.json').on('change', function (event) {
+    gulp.watch('./gulp_conf/conf.inject.json').on('change', function () {
         runSequence('inject:reset', 'inject', 'diff');
     });
-    gulp.watch(conf.templates).on('change', function (event) {
+    gulp.watch(conf.templates).on('change', function () {
         reload();
     });
 });

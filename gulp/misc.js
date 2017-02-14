@@ -14,43 +14,43 @@ var paths = JSON.parse(fs.readFileSync('./gulp_conf/conf.inject.json'));
 var dirSearch = ['./web/sources/**/*.css', './web/sources/**/*.js'];
 var gulpTasks = [
 {
-    name: 'gulp', 
+    name: 'gulp',
     desc: 'Build your application to work in dev environnement without Browsersync'
 },
 {
-    name: 'gulp --serve', 
+    name: 'gulp --serve',
     desc: 'Build your application to work in dev environnement with Browsersync'
 },
 {
-    name: 'gulp --prod', 
+    name: 'gulp --prod',
     desc: 'Build an optimized version of your application without Browsersync'
 },
 {
-    name: 'gulp --prod --serve', 
+    name: 'gulp --prod --serve',
     desc: 'Build an optimized version of your application with Browsersync'
 },
 {
-    name: 'gulp assets', 
+    name: 'gulp assets',
     desc: 'Process assets, compiles it (eventually) and serves it in web/sources folder'
 },
 {
-    name: 'gulp clean', 
-    desc: 'Delete web/sources and web/dist folders'
+    name: 'gulp clean',
+    desc: 'Delete web/css, web/fonts, web/img, web/js and web/sources folders'
 },
 {
-    name: 'gulp conf:update', 
+    name: 'gulp conf:update',
     desc: 'Save a template containing inject tag into the gulp_conf/conf.inject.json file'
 },
 {
-    name: 'gulp inject:reset', 
+    name: 'gulp inject:reset',
     desc: 'Clean all between the inject tags'
 },
 {
-    name: 'gulp assets:show:diff', 
+    name: 'gulp assets:show:diff',
     desc: 'Compare assets saved into your gulp/conf.inject.json file and assets available under the sources web directory'
 },
 {
-    name: 'gulp bower:list', 
+    name: 'gulp bower:list',
     desc: 'Display the list of bower files paths available to be injected into your templates. If some files are incorrect or missing you can always override bower.json.'
 }
 ];
@@ -66,7 +66,7 @@ var footer = function(length){
 }
 
 var line = function(pattern, length){
-    return pattern.repeat(length);  
+    return pattern.repeat(length);
 }
 
 var drawLine = function(pattern, length){
@@ -92,7 +92,7 @@ var assetsList = function(){
     return gulp.src(dirSearch, {
         read: false
     })
-    .pipe(through2.obj(function(file, enc, callback) { 
+    .pipe(through2.obj(function(file, enc, callback) {
         var filepath = utils.formatPath(path.relative(process.cwd(), file.path));
         this.push(filepath);
         callback();
@@ -107,7 +107,7 @@ var assetsList2 = function(arrayPath2){
     return gulp.src(arrayPath2, {
         read: false
     })
-    .pipe(through2.obj(function(file, enc, callback) { 
+    .pipe(through2.obj(function(file, enc, callback) {
         var filepath = utils.formatPath(path.relative(process.cwd(), file.path));
         this.push(filepath);
         callback();
@@ -119,7 +119,7 @@ var assetsList2 = function(arrayPath2){
 
 var checkDiff = function(arrayPath, arrayPath2, step){
     drawLine('',1);
-    var j = 0;		
+    var j = 0;
     for (var i in arrayPath2) {
         var p = arrayPath2[i];
         if(step == 'step-1')
@@ -140,7 +140,7 @@ var checkDiff = function(arrayPath, arrayPath2, step){
     }
     if(j == 0)
         if(step == 'step-1')
-            gutil.log(gutil.colors.green('OK'), 'All of your CSS and JS files listed into', gutil.colors.magenta('./gulp_conf/conf.inject.json'), 'exist.');  
+            gutil.log(gutil.colors.green('OK'), 'All of your CSS and JS files listed into', gutil.colors.magenta('./gulp_conf/conf.inject.json'), 'exist.');
         else
             gutil.log(gutil.colors.green('OK'), 'All of your CSS and JS files stored in your application are used.');
 }

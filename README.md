@@ -1,6 +1,6 @@
 # Symfony Gulp Builder
 
-This repo is an alternative to Assetic based on gulp. 
+This repo is an alternative to Assetic based on gulp.
 
 ## How Does it Work?
 
@@ -10,7 +10,7 @@ There are 2 environments that you can use : _dev_ and _prod_ (that do not match 
 While you are working, it monitors your changes and maintains your output files.  
 Run `gulp` or `gulp --serve` (if you want additionnaly lauching BrowserSync) to use the dev environnement.
 
-- In the **prod** environment, JS and CSS files are additionally concatenated and minified. If the compressing options is set to true, images are optimized. The JS and CSS files are served from a different location (the `web/dist` folder) so any relative paths inside your CSS files will break. Don't worry! To fix this, The task parses your CSS files and corrects the paths internally to reflect the new location.  
+- In the **prod** environment, JS and CSS files are additionally concatenated and minified. If the compressing options is set to true, images are optimized. The JS and CSS files are served from a different location (`web/css` and `web/js` folders) so any relative paths inside your CSS files will break. Don't worry! To fix this, The task parses your CSS files and corrects the paths internally to reflect the new location.  
 Run `gulp --prod` or `gulp --prod --serve` to use the prod environnement.
 
 ## Directory structure
@@ -21,7 +21,7 @@ Run `gulp --prod` or `gulp --prod --serve` to use the prod environnement.
 │
 ├── gulp/
 │   ├── conf.js
-│   ├── images.js 
+│   ├── images.js
 │   ├── main.js
 │   ├── misc.js
 │   ├── scripts.js
@@ -64,7 +64,10 @@ Run `gulp --prod` or `gulp --prod --serve` to use the prod environnement.
 ├── web/
 │   ├── bundles/
 │   ├── components/(optional)
-│   ├── dist/
+│   ├── css/
+│   ├── fonts/
+│   ├── img/
+│   ├── js/
 │   └── sources/
 │
 ├── .bowerrc (optional)
@@ -85,9 +88,9 @@ Run `gulp --prod` or `gulp --prod --serve` to use the prod environnement.
 
 ### Individual tasks
 
-- `gulp assets` to process assets, compile it (eventually) and serve it in `web/sources` folder
+- `gulp assets` to process assets, compile it (eventually) and serve it in `web/sources` and `web/img` folder
 
-- `gulp clean` to delete `web/sources` and `web/dist` folders
+- `gulp clean` to delete `web/css`, `web/fonts`, `web/img`, `web/js` and `web/sources` folders
 
 - `gulp conf:update` to save a template containing injection placeholder tags into the `gulp_conf/conf.inject.json` file
 
@@ -103,7 +106,7 @@ Run `gulp --prod` or `gulp --prod --serve` to use the prod environnement.
 
 ## How use it?
 
-### 1. Edit gulp_conf/conf.js 
+### 1. Edit gulp_conf/conf.js
 
 ```js
 // gulp_conf/conf.js
@@ -192,7 +195,7 @@ _src/DemoBundle/Resources/views/layout.html.twig_
 {% endblock %}
 {% block body  %}
 {% endblock %}
-       
+
 {% block javascripts %}
     {{ parent() }}
         <!-- inject:js -->
@@ -215,7 +218,7 @@ This task searches through your templates containing injection placeholder tags 
 At the end of the task, you can edit `gulp_conf/conf.inject.json`(to change the order your scripts must be included for exemple).   
 Rerun `gulp conf:update` each time you want save a new template into `gulp_conf/conf.inject.json`.  
 
-Exemple : 
+Exemple :
 
 1) Step 1 : Select your template
 
