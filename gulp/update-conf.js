@@ -36,7 +36,7 @@ function createPathsArray(paths){
      for(var i=0;i<length;i++){
         var last = i<length-1 ? "," : "";
         str += '            "./'+paths[i]+'"'+last+'\n';
-     }   
+     }
      str += length > 0 ? "        ]" : "]";
      return str;
 }
@@ -85,38 +85,30 @@ function getParams(tplFile){
             bundlePrefix = tplFile.substring(0,tplFile.indexOf('Bundle')).split('/').pop().toLowerCase()
             output = bundlePrefix;
         }
-        if(dir.split('/').pop() != 'views')   
+        if(dir.split('/').pop() != 'views')
             output += '-'+dir.split('/').pop()+'-'+view.substring(0,view.indexOf('.view.twig'));
     }
     return {dir:dir, view:view, output:output.toLowerCase(), bundlePrefix:bundlePrefix};
 }
 
 function addSources(tplFile, ext){
-    var tplPaths = {js:{vendor:[],app:[]},css:{vendor:[],app:[]}};  
+    var tplPaths = {js:{vendor:[],app:[]},css:{vendor:[],app:[]}};
     var params = getParams(tplFile);
     var arrayPath = {css:[],js:[]};
     var arrayPrompt = [];
     var dirSearch = [];
-    
-    try{
-        var wd = utils.wiredepPath();
-        for(var i=0;i<wd.length;i++){
-            var filepath = utils.formatPath(path.relative(process.cwd(), wd[i]));
-            dirSearch.push(filepath);  
-        }
-    }
-    catch(e){//console.log(e);
-    }
-    
+
     if(ext.indexOf('css') !== -1) {
+        dirSearch.push('./web/components/**/*.css');
         dirSearch.push('./web/sources/**/*.css');
     }
     if(ext.indexOf('js') !== -1){
+        dirSearch.push('./web/components/**/*.js');
         dirSearch.push('./web/sources/**/*.js');
     }
-    
+
     gulp.src(dirSearch, {read: false})
-    .pipe(through2.obj(function(file, enc, callback) { 
+    .pipe(through2.obj(function(file, enc, callback) {
         var filepath = utils.formatPath(path.relative(process.cwd(), file.path));
         this.push(filepath);
         callback();
@@ -131,8 +123,8 @@ function addSources(tplFile, ext){
                 name: 'styles',
                 message: 'What stylesheets would you like to inject in the selected template?',
                 choices: arrayPath['css']
-                
-            }); 
+
+            });
         }
         if(arrayPath['js'].length > 0 && ext.indexOf('js') !== -1){
             arrayPrompt.push({
@@ -140,7 +132,7 @@ function addSources(tplFile, ext){
                 name: 'scripts',
                 message: 'What scripts would you like to inject in the selected template?',
                 choices: arrayPath['js']
-            }); 
+            });
         }
         gulp.src(dirSearch, {read: false}).pipe(prompt.prompt(arrayPrompt, function(res){
             console.log('');
@@ -148,7 +140,7 @@ function addSources(tplFile, ext){
             if(res.styles)
                 files = files.concat(res.styles);
             if(res.scripts)
-                files = files.concat(res.scripts);           
+                files = files.concat(res.scripts);
             for(var i=0;i<files.length;i++){
                 if(files[i].indexOf('web/components') !== -1)
                     tplPaths[utils.guessExt(files[i])]['vendor'].push(files[i]);
@@ -184,18 +176,18 @@ function write(params,tplPaths){
     .on('end', function () {
         return string_src('./gulp_conf/conf.inject.json', txt)
             .pipe(gulp.dest('.'))
-    });    
+    });
 }
 
 gulp.task('conf:update', function () {
   gulp.src(conf.templates, {read: true})
-    .pipe(through2.obj(function(file, enc, callback) { 
+    .pipe(through2.obj(function(file, enc, callback) {
         if(file.contents.toString().indexOf('<!-- endinject -->') !== -1){
             var filepath = utils.formatPath(path.relative(process.cwd(), file.path));
-            var found = false;     
+            var found = false;
             for(var i=0;i<paths.length;i++){
                 if(paths[i].dir+paths[i].view == './'+filepath)
-                    found = true;    
+                    found = true;
             }
             if(!found)
                 this.push(filepath);
@@ -209,7 +201,7 @@ gulp.task('conf:update', function () {
         var nothingToAdd = arrayPath.length == 0;
         if(nothingToAdd)
             gutil.log(gutil.colors.white('All your twig files containing "<!-- endinject -->" are already saved into', gutil.colors.magenta('.gulp_conf/conf.inject.json')));
-        
+
         gulp.src(conf.templates, {read: false})
         .pipe(gulpif(!nothingToAdd, prompt.prompt([{
             type: 'list',
@@ -224,7 +216,7 @@ gulp.task('conf:update', function () {
                     ext.push('css');
                 if(file.contents.toString().indexOf('<!-- inject:js -->') !== -1)
                     ext.push('js');
-                
+
                 this.push(ext);
             }))
             .on('data', function(record) {

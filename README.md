@@ -17,6 +17,14 @@ Run `gulp --prod` or `gulp --prod --serve` to use the prod environnement.
 
 ```
 ├── app/
+│    └── Resources/
+│        ├── components/
+│        └── public/
+│            ├── fonts/
+│            ├── img/
+│            ├── scripts/
+│            └── styles/
+│
 ├── bin/
 │
 ├── gulp/
@@ -88,7 +96,7 @@ Run `gulp --prod` or `gulp --prod --serve` to use the prod environnement.
 
 ### Individual tasks
 
-- `gulp assets` to process assets, compile it (eventually) and serve it in `web/sources` and `web/img` folder
+- `gulp assets` to process assets, compile it (eventually) and serve it in `web/sources`, `web/img` and `web/components` folder
 
 - `gulp clean` to delete `web/css`, `web/fonts`, `web/img`, `web/js` and `web/sources` folders
 
@@ -142,7 +150,8 @@ exports.assets = {
 // Add your JS preprocessors tasks below
     },
     img:   [dirBase+'/**/img/**/*.{png,jpg,jpeg,gif,svg}'],
-    fonts: [dirBase+'/**/fonts/**/*.{eot,woff,woff2,ttf,otf,svg}']
+    fonts: [dirBase+'/**/fonts/**/*.{eot,woff,woff2,ttf,otf,svg}'],
+    components: ['app/Resources/components'] // if bower is installed
 };
 ```
 Configuration : you can customize gulp files below

@@ -11,7 +11,7 @@ var fs = require('fs');
 
 var paths = JSON.parse(fs.readFileSync('./gulp_conf/conf.inject.json'));
 
-var dirSearch = ['./web/sources/**/*.css', './web/sources/**/*.js'];
+var dirSearch = ['./web/{sources,components}/**/*.css', './web/{sources,components}/**/*.js'];
 var gulpTasks = [
 {
     name: 'gulp',
@@ -149,15 +149,6 @@ gulp.task('diff', function() {
     arrayPath = [];
     arrayPath2 = utils.confPaths();
     assetsList().on('end', function () {
-        try{
-            var wd = utils.wiredepPath();
-            for(var i in wd){
-                var filepath = utils.formatPath(path.relative(process.cwd(), wd[i]));
-                arrayPath.push(filepath);
-            }
-        } catch(e){
-        // console.log(e);
-        }
         assetsList2(arrayPath2).on('end', function () {
             arrayPath3.sort();
             checkDiff(arrayPath, arrayPath2, 'step-1');

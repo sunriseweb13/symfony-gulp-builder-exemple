@@ -25,9 +25,10 @@ exports.assets = {
         sass:[dirBase+'/**/*.scss'] // ex: sass
     },
     scripts: {
-        js: [dirBase+'/**/*.js']  
+        js: [dirBase+'/**/*.js']
 // Add your JS preprocessors below
     },
     img:   [dirBase+'/**/img/**/*.{png,jpg,jpeg,gif,svg}'],
-    fonts: [dirBase+'/**/fonts/**/*.{eot,woff,woff2,ttf,otf,svg}']
+    fonts: [dirBase+'/**/fonts/**/*.{eot,woff,woff2,ttf,otf,svg}'],
+    components: ['app/Resources/components'] // if bower is installed
 };

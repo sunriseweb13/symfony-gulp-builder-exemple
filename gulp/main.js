@@ -55,6 +55,22 @@ gulp.task('fonts', function () {
         .pipe(gulp.dest('./web/fonts'));
 });
 
+gulp.task('components', function() {
+    try {
+      var wd = utils.wiredepPath();
+      var wdPaths = [];
+      for(var i in wd){
+          var steps = wd[i].split(path.sep);
+          wdPaths.push(conf.assets.components+'/**/'+steps[steps.length-2]+'/'+steps[steps.length-1]);
+      }
+      wdPaths.push(conf.assets.components+'/**/*.{png,jpg,jpeg,gif,svg,eot,woff,woff2,ttf,otf}');
+      return gulp.src(wdPaths)
+          .pipe(gulp.dest('./web/components'));
+    } catch(e){
+      // Cannot find where you keep your Bower packages
+    }
+})
+
 var injectOptions = {
     ignorePath: '/web/',
     addRootSlash: false,
@@ -138,7 +154,7 @@ gulp.task('inject:reset', function () {
         .pipe(gulp.dest('./'));
 });
 
-gulp.task('assets', ['styles', 'scripts', 'img', 'fonts']);
+gulp.task('assets', ['styles', 'scripts', 'img', 'fonts', 'components']);
 gulp.task('clean', $.del.bind(null, ['web/sources', 'web/fonts', 'web/img', 'web/css', 'web/js']));
 
 function deleteFile(eventPath, ext){
