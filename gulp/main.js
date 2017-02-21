@@ -98,7 +98,7 @@ function transformCssUrls(url, filePath){
         }
     }
     var split = path.resolve(filePath,'../'+url).split(path.join(path.resolve(),utils.formatPath('/web')));
-    var folder = split[1].indexOf('img') === 0 ? 'fonts' : 'img';
+    var folder = split[1].indexOf('img') === -1 ? 'fonts' : 'img';
     return utils.formatPath(utils.findShortPath(split[1], folder));
 }
 
